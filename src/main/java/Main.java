@@ -86,17 +86,22 @@ Stwórz main'a w którym dostępna jest opcja:
         Data dostawy zaktualizowana na obecną automatycznie.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println();
 
         ScannerWork scannerWork = new ScannerWork();
+        Warehuose warehuose = new Warehuose();
+        Utilities utilities = new Utilities();
 
         char sign;
         do {
             System.out.println();
             System.out.println("Enter your choice:" +
-                    " \na) project A" +
+                    " \na) Add an order." +
                     " \nb) project B" +
                     " \nc) project C" +
                     " \nd) project D" +
@@ -104,7 +109,21 @@ public class Main {
             sign = scannerWork.getChar();
             switch (sign) {
                 case 'a':
-                    System.out.println("Project A.");
+                    System.out.println();
+                    System.out.println("Add an order.");
+                    warehuose.printListOfProdukts();
+                    Order order = new Order();
+                    System.out.println("How many products will be in the order?");
+                    int quantityOfProductsInTheOrder = scannerWork.getPositiveNumberFrom1To_number(warehuose.getProdukts().size());
+                    for (int i = 0; i < quantityOfProductsInTheOrder; i++) {
+                        System.out.println("Product: " + (i + 1) + ". \nChoose:");
+                        for (int j = 0; j < quantityOfProductsInTheOrder; j++) {
+                            System.out.print((char) (j + 97) + ") " + warehuose.getProdukts().get(j).getName() + ", ");
+                        }
+                        List<Character> characterListOfSymbolsOfProductsInTheOrder = utilities.getCharactersList(quantityOfProductsInTheOrder);
+                        char choosenProduct = scannerWork.chooseProduct(quantityOfProductsInTheOrder, characterListOfSymbolsOfProductsInTheOrder);
+                        System.out.println();
+                    }
                     break;
                 case 'b':
                     System.out.println("Project B.");
