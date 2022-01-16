@@ -88,6 +88,7 @@ Stwórz main'a w którym dostępna jest opcja:
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -113,17 +114,34 @@ public class Main {
                     System.out.println("Add an order.");
                     warehuose.printListOfProdukts();
                     Order order = new Order();
+                    List<Produkt> produktsInTheOrder = new ArrayList<>();
                     System.out.println("How many products will be in the order?");
                     int quantityOfProductsInTheOrder = scannerWork.getPositiveNumberFrom1To_number(warehuose.getProdukts().size());
+                    System.out.println();
                     for (int i = 0; i < quantityOfProductsInTheOrder; i++) {
+                        Produkt produktFromAnOrder = new Produkt();
                         System.out.println("Product: " + (i + 1) + ". \nChoose:");
-                        for (int j = 0; j < quantityOfProductsInTheOrder; j++) {
+                        for (int j = 0; j < warehuose.getProdukts().size(); j++) {
                             System.out.print((char) (j + 97) + ") " + warehuose.getProdukts().get(j).getName() + ", ");
                         }
-                        List<Character> characterListOfSymbolsOfProductsInTheOrder = utilities.getCharactersList(quantityOfProductsInTheOrder);
-                        char choosenProduct = scannerWork.chooseProduct(quantityOfProductsInTheOrder, characterListOfSymbolsOfProductsInTheOrder);
+                        List<Character> characterListOfSymbolsOfProductsInTheWarehouse = utilities.getCharactersList(warehuose.getProdukts().size());
+                        char charOfChoosenProduct = scannerWork.chooseProduct(quantityOfProductsInTheOrder, characterListOfSymbolsOfProductsInTheWarehouse);
+                        Map<Character, Produkt> characterProduktMap = warehuose.getCharacterProduktMap();
+                        Produkt productTemp = characterProduktMap.get(charOfChoosenProduct);
+                        System.out.print(" (" + productTemp.getName() + ").");
+                        System.out.println();
+                        System.out.print("Enter quantity of the product: ");
+                        int quantityOfTheProduct = scannerWork.getPositiveNumberFrom1To_number(1000);
+                        produktFromAnOrder.setName(productTemp.getName());
+                        produktFromAnOrder.setPrice(productTemp.getPrice());
+                        produktFromAnOrder.setQuantity(quantityOfTheProduct);
+                        System.out.println(produktFromAnOrder);
+                        produktsInTheOrder.add(produktFromAnOrder);
                         System.out.println();
                     }
+                    System.out.println();
+                    System.out.println("List of products in the order:");
+                    produktsInTheOrder.forEach(System.out::println);
                     break;
                 case 'b':
                     System.out.println("Project B.");

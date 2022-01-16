@@ -13,7 +13,6 @@ class ScannerWork {
         boolean flag = false;
         int i;
         do {
-            System.out.println();
             while (!scanner.hasNextInt()) {
                 System.err.println("It is not a number!");
                 scanner.next();
@@ -35,7 +34,7 @@ class ScannerWork {
         do {
             chooseOfProduct = getChar();
             if (characterList.contains(chooseOfProduct)) {
-                System.out.println("You have choosen: " + chooseOfProduct + ".");
+                System.out.print("You have choosen: " + chooseOfProduct);
                 flagChoose = true;
             } else {
                 System.err.println("Bad choice.");
