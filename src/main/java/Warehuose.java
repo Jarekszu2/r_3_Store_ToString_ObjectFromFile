@@ -2,10 +2,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +12,8 @@ class Warehuose {
             new Produkt("bread", 3.80, 0),
             new Produkt("meat", 18.0, 0),
             new Produkt("apple", 3.49, 0));
+
+    private List<Order> orderList = new ArrayList<>();
 
     void printListOfProdukts() {
         System.out.println("List of available products:");
@@ -49,5 +48,17 @@ class Warehuose {
 //            }
 //        }
         return priceOfAProduct;
+    }
+
+    String getOrdersNumber() {
+        String ordersNumber;
+        if (orderList.size() == 0) {
+            ordersNumber = "Order-1";
+            System.out.println(ordersNumber);
+        } else {
+            ordersNumber = "Order-" + (orderList.size() + 1);
+            System.out.println(ordersNumber);
+        }
+        return ordersNumber;
     }
 }

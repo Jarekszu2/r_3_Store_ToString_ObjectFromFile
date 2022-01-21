@@ -86,6 +86,8 @@ Stwórz main'a w którym dostępna jest opcja:
         Data dostawy zaktualizowana na obecną automatycznie.
  */
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +99,8 @@ public class Main {
         ScannerWork scannerWork = new ScannerWork();
         Warehuose warehuose = new Warehuose();
         Utilities utilities = new Utilities();
+
+        List<Order> orderList = warehuose.getOrderList();
 
         char sign;
         do {
@@ -142,6 +146,22 @@ public class Main {
                     System.out.println();
                     System.out.println("List of products in the order:");
                     produktsInTheOrder.forEach(System.out::println);
+
+                    System.out.println();
+                    String ordersNumber = warehuose.getOrdersNumber();
+
+                    System.out.println();
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm");
+                    System.out.println(localDateTime.format(dateTimeFormatter));
+
+                    order.setProduktList(produktsInTheOrder);
+                    order.setOrderNumber(ordersNumber);
+                    order.setOrderDate(localDateTime);
+
+                    System.out.println();
+                    orderList.add(order);
+                    warehuose.getOrderList().forEach(System.out::println);
                     break;
                 case 'b':
                     System.out.println("Project B.");
