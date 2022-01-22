@@ -28,13 +28,13 @@ class ScannerWork {
         return i;
     }
 
-    char chooseProduct(int quantityOfProducts, List<Character> characterList) {
+    char chooseChar(List<Character> characterList) {
         boolean flagChoose = false;
         char chooseOfProduct;
         do {
             chooseOfProduct = getChar();
             if (characterList.contains(chooseOfProduct)) {
-                System.out.print("You have choosen: " + chooseOfProduct);
+                System.out.print("You have choosen: " + chooseOfProduct + ")");
                 flagChoose = true;
             } else {
                 System.err.println("Bad choice.");
