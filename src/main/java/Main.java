@@ -88,10 +88,7 @@ Stwórz main'a w którym dostępna jest opcja:
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -102,6 +99,7 @@ public class Main {
         Utilities utilities = new Utilities();
 
         List<Order> orderList = warehuose.getOrderList();
+        List<Produkt> produkts = warehuose.getProdukts();
 
         char sign;
         do {
@@ -194,6 +192,38 @@ public class Main {
                         System.out.println("The choosen order:");
                         Order orderB = characterOrderMapB.get(charB);
                         System.out.println(orderB);
+
+                        System.out.println();
+                        System.out.println("Stock status before delivery:");
+                        for (int i = 0; i < produkts.size(); i++) {
+                            System.out.println((i + 1) + ". " + produkts.get(i).getName() + " " + produkts.get(i).getQuantity());
+                        }
+
+                        System.out.println();
+                        for (int i = 0; i < orderB.getProduktList().size(); i++) {
+                            System.out.printf("Is in the delivery product %s, quantity %d (y/n)?", orderB.getProduktList().get(i).getName(), orderB.getProduktList().get(i).getQuantity());
+                            System.out.println();
+                            List<Character> characterListAB = Arrays.asList('y', 'n');
+                            char charB2 = scannerWork.chooseChar(characterListAB);
+                            if (charB2 == 'y') {
+                                for (int j = 0; j < produkts.size(); j++) {
+                                    if (produkts.get(j).getName().equals(orderB.getProduktList().get(i).getName())) {
+                                        produkts.get(j).setQuantity(produkts.get(j).getQuantity() + orderB.getProduktList().get(i).getQuantity());
+                                        System.out.println();
+                                    }
+                                }
+                            }
+                        }
+                        System.out.println();
+                        System.out.println("Delivery have registered.");
+
+                        System.out.println();
+                        System.out.println("Stock status after delivery:");
+                        for (int i = 0; i < produkts.size(); i++) {
+                            System.out.println((i + 1) + ". " + produkts.get(i).getName() + " " + produkts.get(i).getQuantity());
+                        }
+
+                        orderList.remove(orderB);
                     } else {
                         System.err.println("There are no orders to register.");
                     }
