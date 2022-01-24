@@ -165,16 +165,22 @@ public class Main {
                 case 'b':
                     System.out.println();
                     System.out.println("Registration the delivery.");
-                    if (orderList.size() > 0) {
+                    List<Order> unrealizedOrderList = new ArrayList<>();
+                    for (Order o : orderList) {
+                        if (o.getInvoiceNumber() == null) {
+                            unrealizedOrderList.add(o);
+                        }
+                    }
+                    if (unrealizedOrderList.size() > 0) {
                         System.out.println();
                         System.out.println("Choose an order to registration:");
                         System.out.println("   number,  date of the order");
                         DateTimeFormatter dateTimeFormatterB = DateTimeFormatter.ofPattern("dd-MM-yyy");
-                        for (int i = 0; i < orderList.size(); i++) {
-                            System.out.println((char) (i + 97) + ") " + orderList.get(i).getOrderNumber() + " " + orderList.get(i).getOrderDate().format(dateTimeFormatterB));
+                        for (int i = 0; i < unrealizedOrderList.size(); i++) {
+                            System.out.println((char) (i + 97) + ") " + unrealizedOrderList.get(i).getOrderNumber() + " " + unrealizedOrderList.get(i).getOrderDate().format(dateTimeFormatterB));
                         }
                         List<Character> orderListCharacterB = new ArrayList<>();
-                        for (int i = 0; i < orderList.size(); i++) {
+                        for (int i = 0; i < unrealizedOrderList.size(); i++) {
                             orderListCharacterB.add((char) (i + 97));
                         }
                         char charB = scannerWork.chooseChar(orderListCharacterB);
@@ -183,8 +189,8 @@ public class Main {
 //                    System.out.println();
 //                    orderList.forEach(System.out::println);
                         Map<Character, Order> characterOrderMapB = new HashMap<>();
-                        for (int i = 0; i < orderList.size(); i++) {
-                            characterOrderMapB.put((char) (i + 97), orderList.get(i));
+                        for (int i = 0; i < unrealizedOrderList.size(); i++) {
+                            characterOrderMapB.put((char) (i + 97), unrealizedOrderList.get(i));
                         }
 
                         System.out.println();
@@ -200,22 +206,26 @@ public class Main {
                         }
 
                         System.out.println();
+                        int ifDeliveredProduct = 0;
                         for (int i = 0; i < orderB.getProduktList().size(); i++) {
-                            System.out.printf("Is in the delivery product %s, quantity %d (y/n)?", orderB.getProduktList().get(i).getName(), orderB.getProduktList().get(i).getQuantity());
-                            System.out.println();
-                            List<Character> characterListAB = Arrays.asList('y', 'n');
-                            char charB2 = scannerWork.chooseChar(characterListAB);
-                            if (charB2 == 'y') {
-                                for (int j = 0; j < produkts.size(); j++) {
-                                    if (produkts.get(j).getName().equals(orderB.getProduktList().get(i).getName())) {
-                                        produkts.get(j).setQuantity(produkts.get(j).getQuantity() + orderB.getProduktList().get(i).getQuantity());
-                                        System.out.println();
+                            if (!orderB.getProduktList().get(i).isIfDelivered()) {
+                                System.out.printf("Is in delivery the product: %s, quantity: %d (y/n)?", orderB.getProduktList().get(i).getName(), orderB.getProduktList().get(i).getQuantity());
+                                System.out.println();
+                                List<Character> characterListAB = Arrays.asList('y', 'n');
+                                char charB2 = scannerWork.chooseChar(characterListAB);
+                                if (charB2 == 'y') {
+                                    for (int j = 0; j < produkts.size(); j++) {
+                                        if (produkts.get(j).getName().equals(orderB.getProduktList().get(i).getName())) {
+                                            produkts.get(j).setQuantity(produkts.get(j).getQuantity() + orderB.getProduktList().get(i).getQuantity());
+                                            orderB.getProduktList().get(i).setIfDelivered(true);
+                                            System.out.println();
+                                        }
                                     }
+                                } else {
+                                    ifDeliveredProduct++;
                                 }
                             }
                         }
-                        System.out.println();
-                        System.out.println("Delivery have registered.");
 
                         System.out.println();
                         System.out.println("Stock status after delivery:");
@@ -223,7 +233,22 @@ public class Main {
                             System.out.println((i + 1) + ". " + produkts.get(i).getName() + " " + produkts.get(i).getQuantity());
                         }
 
-                        orderList.remove(orderB);
+                        System.out.println();
+                        System.out.println("Delivery have registered.");
+
+                        System.out.println();
+                        if (ifDeliveredProduct == 0) {
+                            String number = orderB.getOrderNumber();
+                            String changedNumber = number.replace("Order-", "Invoice-");
+                            for (Order o : orderList) {
+                                if (o.getOrderNumber().equals(number)) {
+                                    o.setInvoiceNumber(changedNumber);
+                                }
+                            }
+                        }
+
+                        System.out.println();
+                        orderList.forEach(System.out::println);
                     } else {
                         System.err.println("There are no orders to register.");
                     }
