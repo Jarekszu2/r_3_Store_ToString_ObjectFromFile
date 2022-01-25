@@ -107,14 +107,14 @@ public class Main {
             System.out.println("Enter your choice:" +
                     " \na) Adding an order." +
                     " \nb) Registration the delivery" +
-                    " \nc) project C" +
+                    " \nc) Order listing." +
                     " \nd) project D" +
                     " \nq) quit");
             sign = scannerWork.getChar();
             switch (sign) {
                 case 'a':
                     System.out.println();
-                    System.out.println("Add an order.");
+                    System.out.println("Adding an order.");
                     warehuose.printListOfProdukts();
                     Order order = new Order();
                     List<Produkt> produktsInTheOrder = new ArrayList<>();
@@ -254,7 +254,20 @@ public class Main {
                     }
                     break;
                 case 'c':
-                    System.out.println("Project C.");
+                    System.out.println();
+                    System.out.println("Order listing.");
+                    int intC = 0;
+                    int printC = 1;
+                    for (Order oC : orderList) {
+                        if (oC.getInvoiceNumber() == null) {
+                            System.out.println(printC + ". " + oC);
+                            printC++;
+                            intC++;
+                        }
+                    }
+                    if (intC == 0) {
+                        System.err.println("There are no orders.");
+                    }
                     break;
                 case 'd':
                     System.out.println("Project D.");
