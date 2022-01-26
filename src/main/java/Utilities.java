@@ -1,3 +1,8 @@
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,4 +18,12 @@ class Utilities {
         return characterList;
     }
 
+    DateTimeFormatter getDateTimeFormatter() {
+        return  DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    }
+
+    long getDelayInSeconds(Order order) {
+        Duration duration = Duration.between(order.getOrderDate(), order.getDeliveryDate());
+        return duration.getSeconds();
+    }
 }

@@ -108,7 +108,7 @@ public class Main {
                     " \na) Adding an order." +
                     " \nb) Registration the delivery" +
                     " \nc) Order listing." +
-                    " \nd) project D" +
+                    " \nd) Delivery listing." +
                     " \nq) quit");
             sign = scannerWork.getChar();
             switch (sign) {
@@ -243,6 +243,7 @@ public class Main {
                             for (Order o : orderList) {
                                 if (o.getOrderNumber().equals(number)) {
                                     o.setInvoiceNumber(changedNumber);
+                                    o.setDeliveryDate(LocalDateTime.now());
                                 }
                             }
                         }
@@ -270,7 +271,27 @@ public class Main {
                     }
                     break;
                 case 'd':
-                    System.out.println("Project D.");
+                    System.out.println();
+                    System.out.println("Delivery listing.");
+                    int intD = 0;
+                    int printD = 1;
+                    for (Order oD : orderList) {
+                        if (oD.getInvoiceNumber() != null) {
+                            System.out.println(printD + ". " + oD);
+                            long delay = utilities.getDelayInSeconds(oD);
+                            if (delay > 60) {
+                                System.err.printf("   Delay the delivery: %d min.", ((delay / 60) - 1));
+                            } else {
+                                System.out.println("   Delivery on time.");
+                            }
+                            System.out.println();
+                            printD++;
+                            intD++;
+                        }
+                    }
+                    if (printD == 0) {
+                        System.err.println("There are no deliveries.");
+                    }
                     break;
                 case 'e':
                     System.out.println("Project E.");
