@@ -6,6 +6,7 @@ class MainTest {
     public static void main(String[] args) {
         System.out.println();
         Warehuose warehuose = new Warehuose();
+        Utilities utilities = new Utilities();
 
         int i = (int) 'a';
         System.out.println(i);
@@ -29,7 +30,7 @@ class MainTest {
         System.out.println();
         warehuose.writeProductsToAFile();
         System.out.println("Ok.");
-        String s = warehuose.getStringProductsFromAFile();
+        String s = utilities.getStringProductsFromAFile();
         System.out.println(s);
 
         System.out.println();

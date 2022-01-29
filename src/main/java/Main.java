@@ -298,8 +298,18 @@ public class Main {
                     break;
                 case 'e':
                     System.out.println();
-                    System.out.println("Project E.");
-                    System.out.println(warehuose.getStringProductsToFile());
+                    System.out.println("Writing to a file.");
+                    System.out.println(warehuose.getStringProductsToFile()); // only to see data to file
+                    warehuose.writeProductsToAFile();
+                    break;
+                case 'f':
+                    System.out.println();
+                    System.out.println("Reading from a file.");
+                    String stringProductsFromFile = utilities.getStringProductsFromAFile();
+                    String[] tabStringProductsFromFile = utilities.getTabStringProductsFromStringFromFile(stringProductsFromFile);
+                    List<String> listStringProductsFromFile = utilities.getListStringFromTabString(tabStringProductsFromFile);
+                    List<Produkt> productsFromFile = utilities.getProductsListFromFile(listStringProductsFromFile);
+                    productsFromFile.forEach(System.out::println);
                     break;
             }
         } while (sign != 'q');
