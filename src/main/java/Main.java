@@ -109,6 +109,8 @@ public class Main {
                     " \nb) Registration the delivery" +
                     " \nc) Order listing." +
                     " \nd) Delivery listing." +
+                    " \ne) Writing to a file." +
+                    " \nf) Reading from a file." +
                     " \nq) quit");
             sign = scannerWork.getChar();
             switch (sign) {
@@ -280,7 +282,8 @@ public class Main {
                             System.out.println(printD + ". " + oD);
                             long delay = utilities.getDelayInSeconds(oD);
                             if (delay > 60) {
-                                System.err.printf("   Delay the delivery: %d min.", ((delay / 60) - 1));
+                                System.err.printf("   Delay the delivery" +
+                                        ": %d min.", ((delay / 60) - 1));
                             } else {
                                 System.out.println("   Delivery on time.");
                             }
@@ -294,7 +297,9 @@ public class Main {
                     }
                     break;
                 case 'e':
+                    System.out.println();
                     System.out.println("Project E.");
+                    System.out.println(warehuose.getStringProductsToFile());
                     break;
             }
         } while (sign != 'q');

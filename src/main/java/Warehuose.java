@@ -2,6 +2,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.*;
 import java.util.*;
 
 @NoArgsConstructor
@@ -60,5 +61,38 @@ class Warehuose {
             System.out.println(ordersNumber);
         }
         return ordersNumber;
+    }
+
+    String getStringProductsToFile() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Produkt p : produkts) {
+            stringBuilder.append(p.toStringWrite());
+        }
+        return stringBuilder.toString();
+    }
+
+    void writeProductsToAFile() {
+        try(PrintWriter printWriter = new PrintWriter(new FileWriter("file1.txt"))) {
+            for (Produkt p : produkts) {
+                printWriter.println(p.toStringWrite());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    String getStringProductsFromAFile() {
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("file1.txt"))) {
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] tab = line.split("=");
+                stringBuilder.append(tab[1]);
+                stringBuilder.append(";");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 }

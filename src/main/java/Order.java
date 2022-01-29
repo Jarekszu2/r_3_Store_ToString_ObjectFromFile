@@ -14,4 +14,12 @@ class Order {
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
     private String invoiceNumber;
+
+    String toStringWrite() {
+        return  "orderNumber='" + orderNumber + "\n" +
+                ", produktList=" + produktList + "\n" +
+                ", orderDate=" + orderDate + "\n" +
+                ", deliveryDate=" + deliveryDate + "\n" +
+                ", invoiceNumber='" + invoiceNumber;
+    }
 }

@@ -17,4 +17,13 @@ class Produkt {
         this.quantity = quantity;
         this.ifDelivered = false;
     }
+
+    String toStringWrite() {
+        return  "name=" + name + "\n" +
+                "price=" + price + "\n" +
+                "quantity=" + quantity + "\n" +
+                "ifDelivered=" + ifDelivered + "\n" +
+                "TTT=YYY";
+    }
+
 }
