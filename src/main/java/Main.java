@@ -299,17 +299,30 @@ public class Main {
                 case 'e':
                     System.out.println();
                     System.out.println("Writing to a file.");
+
                     System.out.println(warehuose.getStringProductsToFile()); // only to see data to file
                     warehuose.writeProductsToAFile();
+
+                    warehuose.writeOredersToAFile();
                     break;
                 case 'f':
                     System.out.println();
-                    System.out.println("Reading from a file.");
-                    String stringProductsFromFile = utilities.getStringProductsFromAFile();
-                    String[] tabStringProductsFromFile = utilities.getTabStringProductsFromStringFromFile(stringProductsFromFile);
+                    System.out.println("Reading products from a file.");
+                    String stringProductsFromFile = utilities.getStringFromAFile("fileProducts.txt");
+                    String[] tabStringProductsFromFile = utilities.getTabStringFromFile(stringProductsFromFile, "YYY;");
                     List<String> listStringProductsFromFile = utilities.getListStringFromTabString(tabStringProductsFromFile);
                     List<Produkt> productsFromFile = utilities.getProductsListFromFile(listStringProductsFromFile);
                     productsFromFile.forEach(System.out::println);
+
+                    System.out.println();
+                    System.out.println("Reading orders from a file.");
+                    String stringOrdersFromFile = utilities.getStringFromAFile("fileOrders.txt");
+                    String[] tabStringOrdersFromFile = utilities.getTabStringFromFile(stringOrdersFromFile, "ORDER;");
+                    List<String> listStringOrdersFromFile = utilities.getListStringFromTabString(tabStringOrdersFromFile);
+                    listStringOrdersFromFile.forEach(System.out::println);
+                    List<Order> ordersFromFile = utilities.getOrdersListFromFile(listStringOrdersFromFile);
+                    System.out.println();
+                    ordersFromFile.forEach(System.out::println);
                     break;
             }
         } while (sign != 'q');

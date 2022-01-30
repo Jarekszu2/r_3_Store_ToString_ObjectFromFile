@@ -1,5 +1,5 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 class MainTest {
@@ -30,7 +30,7 @@ class MainTest {
         System.out.println();
         warehuose.writeProductsToAFile();
         System.out.println("Ok.");
-        String s = utilities.getStringProductsFromAFile();
+        String s = utilities.getStringFromAFile("fileProducts.txt");
         System.out.println(s);
 
         System.out.println();
@@ -41,5 +41,13 @@ class MainTest {
         for (String s1 : strings) {
             System.out.println(s1);
         }
+
+        System.out.println();
+        System.out.println("Example order:");
+        Order order = new Order();
+        order.setOrderNumber("OR-1111");
+        order.setProduktList(warehuose.getProdukts());
+        order.setOrderDate(LocalDateTime.now());
+        System.out.println(order.getStringOrderToFile().trim());
     }
 }

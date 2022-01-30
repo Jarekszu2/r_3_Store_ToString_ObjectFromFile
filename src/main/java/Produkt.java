@@ -26,4 +26,11 @@ class Produkt {
                 "TTT=YYY";
     }
 
+    String toStringWrite_2() {
+        return  "name=" + name + "\n" +
+                "price=" + price + "\n" +
+                "quantity=" + quantity + "\n" +
+                "ifDelivered=" + ifDelivered + "\n" +
+                "TTT=YYY" + "\n";
+    }
 }

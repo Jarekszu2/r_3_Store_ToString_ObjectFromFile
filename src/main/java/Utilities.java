@@ -19,7 +19,7 @@ class Utilities {
     }
 
     DateTimeFormatter getDateTimeFormatter() {
-        return  DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return  DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     }
 
     long getDelayInSeconds(Order order) {
@@ -27,10 +27,10 @@ class Utilities {
         return duration.getSeconds();
     }
 
-    String getStringProductsFromAFile() {
+    String getStringFromAFile(String fileName) {
         String line;
         StringBuilder stringBuilder = new StringBuilder();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("fileProducts.txt"))) {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] tab = line.split("=");
                 stringBuilder.append(tab[1]);
@@ -42,8 +42,8 @@ class Utilities {
         return stringBuilder.toString();
     }
 
-    String[] getTabStringProductsFromStringFromFile(String stringFromFile) {
-        return stringFromFile.split("YYY;");
+    String[] getTabStringFromFile(String stringFromFile, String split) {
+        return stringFromFile.split(split);
     }
 
     List<String> getListStringFromTabString(String[] tabString) {
@@ -71,5 +71,32 @@ class Utilities {
             produkts.add(produkt);
         }
         return produkts;
+    }
+
+    List<Order> getOrdersListFromFile(List<String> listStringOrdersFromFile) {
+        List<Order> orderList = new ArrayList<>();
+        for (String s : listStringOrdersFromFile) {
+            Order order = new Order();
+            String[] tab = s.split(";");
+            order.setOrderNumber(tab[0]);
+            try {
+                order.setOrderDate(LocalDateTime.parse(tab[1], getDateTimeFormatter()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // delivery date
+            if (!tab[2].equals("null")) {
+                try {
+                    order.setDeliveryDate(LocalDateTime.parse(tab[2], getDateTimeFormatter()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                order.setDeliveryDate(null);
+            }
+
+            orderList.add(order);
+        }
+        return orderList;
     }
 }

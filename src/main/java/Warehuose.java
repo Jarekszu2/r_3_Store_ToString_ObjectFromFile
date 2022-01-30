@@ -80,4 +80,14 @@ class Warehuose {
             e.printStackTrace();
         }
     }
+
+    void writeOredersToAFile() {
+        try(PrintWriter printWriter = new PrintWriter(new FileWriter("fileOrders.txt"))) {
+            for (Order o : orderList) {
+                printWriter.println(o.getStringOrderToFile());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,0 +1,11 @@
+orderNumber=Order-1
+orderDate=30-01-2022 22:36:35
+deliveryDate=null
+invoiceNumber=null
+productsCount=1
+name=milk
+price=2.39
+quantity=1
+ifDelivered=false
+TTT=YYY
+TTT=ORDER
