@@ -85,15 +85,40 @@ class Utilities {
                 e.printStackTrace();
             }
             // delivery date
-            if (!tab[2].equals("null")) {
+            if (!tab[3].equals("null")) {
                 try {
-                    order.setDeliveryDate(LocalDateTime.parse(tab[2], getDateTimeFormatter()));
+                    order.setDeliveryDate(LocalDateTime.parse(tab[3], getDateTimeFormatter()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 order.setDeliveryDate(null);
             }
+            order.setInvoiceNumber(tab[2]);
+
+            List<Produkt> produktList = new ArrayList<>();
+            for (int i = 4; i < tab.length; i+=5) {
+                Produkt produkt = new Produkt();
+                produkt.setName(tab[i]);
+                try {
+                    produkt.setPrice(Double.parseDouble(tab[i + 1]));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    produkt.setQuantity(Integer.parseInt(tab[i + 2]));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    produkt.setIfDelivered(Boolean.parseBoolean(tab[i + 3]));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                produktList.add(produkt);
+            }
+            order.setProduktList(produktList);
 
             orderList.add(order);
         }

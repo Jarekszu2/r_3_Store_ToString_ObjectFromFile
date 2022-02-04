@@ -19,9 +19,19 @@ class Order {
         Utilities utilities = new Utilities();
         return  "orderNumber=" + orderNumber + "\n" +
                 "orderDate=" + orderDate.format(utilities.getDateTimeFormatter()) + "\n" +
-                "deliveryDate=" + deliveryDate + "\n" +
-                "invoiceNumber=" + invoiceNumber + "\n" +
-                "productsCount=" + produktList.size() + "\n";
+                "invoiceNumber=" + invoiceNumber + "\n";
+//                "productsCount=" + produktList.size() + "\n";
+    }
+
+    String getStringDeliveryDate() {
+        Utilities utilities = new Utilities();
+        String stringDeliveryDate;
+        if (deliveryDate == null) {
+            stringDeliveryDate = "deliveryDate=null\n";
+        } else {
+            stringDeliveryDate = "deliveryDate=" + deliveryDate.format(utilities.getDateTimeFormatter()) + "\n";
+        }
+        return stringDeliveryDate;
     }
 
     private String toStringProducts() {
@@ -34,12 +44,25 @@ class Order {
 
     String getStringOrderToFile() {
         String s = toStringWrite();
-        String s1 = s.concat(toStringProducts());
+        String sod = s.concat(getStringDeliveryDate());
+        String s1 = sod.concat(toStringProducts());
         return s1.concat("TTT=ORDER");
 //        StringBuilder stringBuilder = new StringBuilder();
 //        stringBuilder.append(toStringWrite());
 //        stringBuilder.append(toStringProducts());
 //        stringBuilder.append("TTT=ORDER");
 //        return stringBuilder.toString();
+    }
+
+    @Override
+    public String toString() {
+        Utilities u = new Utilities();
+        return "Order{" +
+                "orderNumber='" + orderNumber + '\'' +
+                ", produktList=" + produktList +
+                ", orderDate=" + orderDate.format(u.getDateTimeFormatter()) + ", " +
+                getStringDeliveryDate().replace("\n", "") +
+                ", invoiceNumber='" + invoiceNumber + '\'' +
+                '}';
     }
 }

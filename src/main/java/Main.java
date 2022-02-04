@@ -111,7 +111,7 @@ public class Main {
                     " \nd) Delivery listing." +
                     " \ne) Writing to a file." +
                     " \nf) Reading from a file." +
-                    " \nq) quit");
+                    " \nq) Quit");
             sign = scannerWork.getChar();
             switch (sign) {
                 case 'a':
@@ -126,11 +126,16 @@ public class Main {
                     for (int i = 0; i < quantityOfProductsInTheOrder; i++) {
                         Produkt produktFromAnOrder = new Produkt();
                         System.out.println("Product: " + (i + 1) + ". \nChoose:");
+
+                        // selection menu - printing
                         for (int j = 0; j < warehuose.getProdukts().size(); j++) {
                             System.out.print((char) (j + 97) + ") " + warehuose.getProdukts().get(j).getName() + ", ");
                         }
+                        // selection menu - creating
                         List<Character> characterListOfSymbolsOfProductsInTheWarehouse = utilities.getCharactersList(warehuose.getProdukts().size());
+                        // choosing of product
                         char charOfChoosenProduct = scannerWork.chooseChar(characterListOfSymbolsOfProductsInTheWarehouse);
+                        // creating the Map: character -> product
                         Map<Character, Produkt> characterProduktMap = warehuose.getCharacterProduktMap();
                         Produkt productTemp = characterProduktMap.get(charOfChoosenProduct);
                         System.out.print(" (" + productTemp.getName() + ").");
@@ -144,23 +149,23 @@ public class Main {
                         produktsInTheOrder.add(produktFromAnOrder);
                         System.out.println();
                     }
-                    System.out.println();
+
                     System.out.println("List of products in the order:");
                     produktsInTheOrder.forEach(System.out::println);
 
                     System.out.println();
                     String ordersNumber = warehuose.getOrdersNumber();
 
-                    System.out.println();
-                    LocalDateTime localDateTime = LocalDateTime.now();
-                    DateTimeFormatter dateTimeFormatterA = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm");
-                    System.out.println(localDateTime.format(dateTimeFormatterA));
+//                    System.out.println();
+//                    LocalDateTime localDateTime = LocalDateTime.now();
+//                    DateTimeFormatter dateTimeFormatterA = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm");
+//                    System.out.println(localDateTime.format(dateTimeFormatterA));
 
                     order.setProduktList(produktsInTheOrder);
                     order.setOrderNumber(ordersNumber);
-                    order.setOrderDate(localDateTime);
+                    order.setOrderDate(LocalDateTime.now());
 
-                    System.out.println();
+//                    System.out.println();
                     System.out.println(order);
                     orderList.add(order);
                     break;

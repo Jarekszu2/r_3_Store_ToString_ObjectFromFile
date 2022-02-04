@@ -55,7 +55,7 @@ class Warehuose {
         String ordersNumber;
         if (orderList.size() == 0) {
             ordersNumber = "Order-1";
-            System.out.println(ordersNumber);
+//            System.out.println(ordersNumber);
         } else {
             ordersNumber = "Order-" + (orderList.size() + 1);
             System.out.println(ordersNumber);

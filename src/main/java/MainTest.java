@@ -3,7 +3,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 class MainTest {
+    private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+
     public static void main(String[] args) {
+        System.out.println();
+        System.out.println(ANSI_YELLOW + "This text is yellow" + ANSI_RESET);
+        System.out.println(ANSI_RED_BACKGROUND + "The background color is red" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + ANSI_RED_BACKGROUND + "TEST" + ANSI_RESET);
+
         System.out.println();
         Warehuose warehuose = new Warehuose();
         Utilities utilities = new Utilities();
@@ -48,6 +57,10 @@ class MainTest {
         order.setOrderNumber("OR-1111");
         order.setProduktList(warehuose.getProdukts());
         order.setOrderDate(LocalDateTime.now());
+        order.setDeliveryDate(LocalDateTime.now());
+        System.out.println(order.getStringDeliveryDate());
         System.out.println(order.getStringOrderToFile().trim());
+        System.out.println();
+        System.out.println(order);
     }
 }

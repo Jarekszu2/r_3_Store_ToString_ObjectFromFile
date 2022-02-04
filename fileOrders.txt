@@ -1,11 +1,10 @@
 orderNumber=Order-1
-orderDate=30-01-2022 22:36:35
-deliveryDate=null
-invoiceNumber=null
-productsCount=1
+orderDate=02-02-2022 20:51:21
+invoiceNumber=Invoice-1
+deliveryDate=02-02-2022 20:51:29
 name=milk
 price=2.39
 quantity=1
-ifDelivered=false
+ifDelivered=true
 TTT=YYY
 TTT=ORDER
