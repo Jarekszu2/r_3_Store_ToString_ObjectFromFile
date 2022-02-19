@@ -91,6 +91,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
+    private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+
     public static void main(String[] args) {
         System.out.println();
 
@@ -133,10 +137,11 @@ public class Main {
                         }
                         // selection menu - creating
                         List<Character> characterListOfSymbolsOfProductsInTheWarehouse = utilities.getCharactersList(warehuose.getProdukts().size());
-                        // choosing of product
+                        // choosing of a product (symbol)
                         char charOfChoosenProduct = scannerWork.chooseChar(characterListOfSymbolsOfProductsInTheWarehouse);
                         // creating the Map: character -> product
                         Map<Character, Produkt> characterProduktMap = warehuose.getCharacterProduktMap();
+                        // choosing of a product (real)
                         Produkt productTemp = characterProduktMap.get(charOfChoosenProduct);
                         System.out.print(" (" + productTemp.getName() + ").");
                         System.out.println();
@@ -153,25 +158,19 @@ public class Main {
                     System.out.println("List of products in the order:");
                     produktsInTheOrder.forEach(System.out::println);
 
-                    System.out.println();
-                    String ordersNumber = warehuose.getOrdersNumber();
-
-//                    System.out.println();
-//                    LocalDateTime localDateTime = LocalDateTime.now();
-//                    DateTimeFormatter dateTimeFormatterA = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm");
-//                    System.out.println(localDateTime.format(dateTimeFormatterA));
-
                     order.setProduktList(produktsInTheOrder);
-                    order.setOrderNumber(ordersNumber);
+                    order.setOrderNumber(warehuose.getOrdersNumber());
                     order.setOrderDate(LocalDateTime.now());
 
-//                    System.out.println();
-                    System.out.println(order);
+                    System.out.println();
+                    System.out.println(ANSI_YELLOW + order + ANSI_RESET);
+
                     orderList.add(order);
                     break;
                 case 'b':
                     System.out.println();
                     System.out.println("Registration the delivery.");
+                    // checking if there are some orders to register
                     List<Order> unrealizedOrderList = new ArrayList<>();
                     for (Order o : orderList) {
                         if (o.getInvoiceNumber() == null) {
@@ -182,26 +181,25 @@ public class Main {
                         System.out.println();
                         System.out.println("Choose an order to registration:");
                         System.out.println("   number,  date of the order");
-                        DateTimeFormatter dateTimeFormatterB = DateTimeFormatter.ofPattern("dd-MM-yyy");
+                        // selection menu - printing
                         for (int i = 0; i < unrealizedOrderList.size(); i++) {
-                            System.out.println((char) (i + 97) + ") " + unrealizedOrderList.get(i).getOrderNumber() + " " + unrealizedOrderList.get(i).getOrderDate().format(dateTimeFormatterB));
+                            System.out.println((char) (i + 97) + ") " + unrealizedOrderList.get(i).getOrderNumber() + " " + unrealizedOrderList.get(i).getOrderDate().format(utilities.getDateTimeFormatter()));
                         }
+                        // selection menu - creating
                         List<Character> orderListCharacterB = new ArrayList<>();
                         for (int i = 0; i < unrealizedOrderList.size(); i++) {
                             orderListCharacterB.add((char) (i + 97));
                         }
+                        // choosing of an order (symbol)
                         char charB = scannerWork.chooseChar(orderListCharacterB);
-
-//                    System.out.println();
-//                    System.out.println();
-//                    orderList.forEach(System.out::println);
+                        // creating the Map: character -> order
                         Map<Character, Order> characterOrderMapB = new HashMap<>();
                         for (int i = 0; i < unrealizedOrderList.size(); i++) {
                             characterOrderMapB.put((char) (i + 97), unrealizedOrderList.get(i));
                         }
 
                         System.out.println();
-//                    characterOrderMapB.forEach((k, v) -> System.out.println(k + ") " + v.getOrderNumber()));
+                        // choosing of an order (real)
                         System.out.println("The choosen order:");
                         Order orderB = characterOrderMapB.get(charB);
                         System.out.println(orderB);
@@ -213,9 +211,10 @@ public class Main {
                         }
 
                         System.out.println();
-                        int ifDeliveredProduct = 0;
+                        int ifDeliveredProduct = 0; // flag to know: if the delivery is complete
                         for (int i = 0; i < orderB.getProduktList().size(); i++) {
                             if (!orderB.getProduktList().get(i).isIfDelivered()) {
+                                // confirmation of product quantity (y/n)?
                                 System.out.printf("Is in delivery the product: %s, quantity: %d (y/n)?", orderB.getProduktList().get(i).getName(), orderB.getProduktList().get(i).getQuantity());
                                 System.out.println();
                                 List<Character> characterListAB = Arrays.asList('y', 'n');
